@@ -1,0 +1,17 @@
+name: UptownsStasisRod
+description: $description
+version: '${version}'
+
+main: me.piksel.uptownsStasisRod.UptownsStasisRod
+api-version: '1.21'
+load: STARTUP
+
+authors: [ PikselWasTaken ]
+website: https://github.com/SomeoneTakePiksel
+permissions:
+  uptown.stasisRod.use:
+    default: true
+commands:
+  stasisRod:
+    usage: "/stasisRod"
+    aliases: [sRod,sr]
