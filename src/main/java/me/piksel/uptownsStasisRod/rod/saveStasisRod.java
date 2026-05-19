@@ -3,6 +3,7 @@ package me.piksel.uptownsStasisRod.rod;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.piksel.uptownsStasisRod.UptownsStasisRod;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -62,14 +63,23 @@ public class saveStasisRod implements CommandExecutor {
                 PersistentDataType.INTEGER,
                 player.getLocation().getBlockZ()
         );
-        //lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockX()));
-        //lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockY()));
-        //lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockZ()));
-        item.removeEnchantments();
+        if (UptownsStasisRod.getInstance().getConfig().getBoolean("show-cords")) {
+            lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockX()));
+            lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockY()));
+            lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockZ()));
+        }
+
+
         meta.setLore(lore);
-        meta.setDisplayName("stasis rod ");
+        if (UptownsStasisRod.getInstance().getConfig().getString("rod-name") != "") {
+            meta.setDisplayName(UptownsStasisRod.getInstance().getConfig().getString("rod-name"));
+        }
         item.setItemMeta(meta);
-        item.setDurability((short) 60);
+        if (UptownsStasisRod.getInstance().getConfig().getBoolean("destroy-rod")){
+            item.setDurability((short) 60);
+            item.removeEnchantments();
+        }
+
         //item.damage(60,player);
         player.sendRichMessage("<grey>stasisRod</grey><dark_grey>:</dark_grey> You saved location to you`re fishing rod");
     }

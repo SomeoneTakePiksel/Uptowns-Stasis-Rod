@@ -14,4 +14,4 @@ permissions:
 commands:
   stasisRod:
     usage: "/stasisRod"
-    aliases: [sRod,sr]
+    aliases: [sRod,sr,rod]

@@ -1,10 +1,7 @@
 package me.piksel.uptownsStasisRod.rod;
 
 import me.piksel.uptownsStasisRod.UptownsStasisRod;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -15,9 +12,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class useStasisRod implements Listener {
     private boolean can = true ;
+    private Plugin plugin;
+
+    public void TemporaryChunkLoader(Plugin plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onUse(PlayerInteractEvent event) {
@@ -61,8 +65,9 @@ public class useStasisRod implements Listener {
         loc.setY(y);
         loc.setZ(z);
         can = false;
-
-
+        Chunk chunk = loc.getChunk();
+        chunk.load(true);
+        loadChunkTemporarily(loc,UptownsStasisRod.getInstance().getConfig().getInt("chunks-sec"));
         Bukkit.getScheduler().runTaskLater(
                 Bukkit.getPluginManager().getPlugin("UptownsStasisRod"),
                 () -> tp(item,loc),
@@ -74,7 +79,9 @@ public class useStasisRod implements Listener {
         ArmorStand a = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
         a.setInvisible(true);
         a.setInvulnerable(true);
-        item.damage(9999, a);
+        if (UptownsStasisRod.getInstance().getConfig().getBoolean("destroy-rod")) {
+            item.damage(9999, a);
+        }
 
 
         Bukkit.getScheduler().runTaskLater(
@@ -87,4 +94,30 @@ public class useStasisRod implements Listener {
         a.remove();
         can = true;
     }
+    //wtf da fuq is this
+    public void loadChunkTemporarily(Location location, int durationSeconds) {
+        World world = location.getWorld();
+        int chunkX = location.getBlockX() >> UptownsStasisRod.getInstance().getConfig().getInt("chunks");
+        int chunkZ = location.getBlockZ() >> UptownsStasisRod.getInstance().getConfig().getInt("chunks");
+
+        if (world == null) return;
+
+        world.getChunkAtAsync(chunkX, chunkZ, true).thenAccept(chunk -> {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    chunk.addPluginChunkTicket(plugin);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            chunk.removePluginChunkTicket(plugin);
+                        }
+                    }.runTaskLater(plugin, durationSeconds * 20L);
+
+                }
+            }.runTask(plugin);
+        });
+    }
+
 }

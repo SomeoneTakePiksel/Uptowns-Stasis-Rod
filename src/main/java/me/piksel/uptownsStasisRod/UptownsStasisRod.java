@@ -11,6 +11,8 @@ public final class UptownsStasisRod extends JavaPlugin {
     private static UptownsStasisRod instance;
     @Override
     public void onEnable() {
+        saveResource("config.yml", false);
+        saveDefaultConfig();
         instance = this;
         // Plugin startup logic
         getCommand("stasisRod").setExecutor(new saveStasisRod());

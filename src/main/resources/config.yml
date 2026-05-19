@@ -1,0 +1,32 @@
+#Stasis Rod config
+
+#==================== durablitie =====================
+
+
+# this functions makes it so if it's true the stasis rod will have 4 durabilitie and once it is used it will destroy the rod
+
+destroy-rod: true
+
+
+
+#==================== meta =====================
+
+
+# set "" to not rename it
+# changes the name of the rod once it saved
+rod-name: "stasis rod"
+
+# show cord in lore on the fishing rod
+show-cords: false
+
+
+
+
+#==================== chunks =====================
+
+# how many of chunks it should load when you use the fishing rod
+chunks: 4
+
+
+#for how many seconds it should load the chunks
+chunks-sec: 4
