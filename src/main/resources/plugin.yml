@@ -1,5 +1,5 @@
 name: UptownsStasisRod
-description: $description
+description: Adds stasis rods to minecraft! use /stasisRod on a fishing rod to bind cords to fishing rods
 version: '${version}'
 
 main: me.piksel.uptownsStasisRod.UptownsStasisRod
@@ -7,7 +7,7 @@ api-version: '1.21'
 load: STARTUP
 
 authors: [ PikselWasTaken ]
-website: https://github.com/SomeoneTakePiksel
+website: https://modrinth.com/plugin/uptowns-stasis-rod
 permissions:
   uptown.stasisRod.use:
     default: true

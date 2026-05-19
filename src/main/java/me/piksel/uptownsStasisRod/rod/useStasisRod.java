@@ -29,7 +29,10 @@ public class useStasisRod implements Listener {
         if (!event.getAction().toString().contains("RIGHT_CLICK")) return;
         Player player = event.getPlayer();
         if (!player.hasPermission("uptown.stasisRod.use")) {return;}
-        if (!can)return;
+        if (!can){
+            event.setCancelled(true);
+            return;
+        }
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
         //which chestplate
@@ -70,7 +73,7 @@ public class useStasisRod implements Listener {
         loadChunkTemporarily(loc,UptownsStasisRod.getInstance().getConfig().getInt("chunks-sec"));
         Bukkit.getScheduler().runTaskLater(
                 Bukkit.getPluginManager().getPlugin("UptownsStasisRod"),
-                () -> tp(item,loc),
+                () -> {tp(item,loc);event.setCancelled(true);},
                 10
         );
     }
