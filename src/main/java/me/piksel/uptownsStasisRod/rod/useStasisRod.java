@@ -15,6 +15,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class useStasisRod implements Listener {
     private boolean can = true ;
     private Plugin plugin;
@@ -41,12 +43,14 @@ public class useStasisRod implements Listener {
         NamespacedKey keyX = new NamespacedKey(UptownsStasisRod.getInstance(), "cordX");
         NamespacedKey keyY = new NamespacedKey(UptownsStasisRod.getInstance(), "cordY");
         NamespacedKey keyZ = new NamespacedKey(UptownsStasisRod.getInstance(), "cordZ");
+        NamespacedKey keyWorld = new NamespacedKey(UptownsStasisRod.getInstance(), "world");
 
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         int cordX = 0;
         int cordY = 0;
         int cordZ = 0;
+        World w;
 
         if (pdc.has(keyX, PersistentDataType.INTEGER)) {
             int v = pdc.get(keyX, PersistentDataType.INTEGER);
@@ -60,13 +64,19 @@ public class useStasisRod implements Listener {
             int v = pdc.get(keyZ, PersistentDataType.INTEGER);
             cordZ = v;
         } else return;
+        if (pdc.has(keyWorld, PersistentDataType.STRING)) {
+            String v = pdc.get(keyWorld, PersistentDataType.STRING);
+            w = Bukkit.getWorld(UUID.fromString(v));
+        } else return;
         Location loc = player.getLocation();
         final int x = cordX;
         final int y = cordY;
         final int z = cordZ;
+        final World world = w;
         loc.setX(x);
         loc.setY(y);
         loc.setZ(z);
+        loc.setWorld(world);
         can = false;
         Chunk chunk = loc.getChunk();
         chunk.load(true);
@@ -98,6 +108,7 @@ public class useStasisRod implements Listener {
         can = true;
     }
     //wtf da fuq is this
+    // the most gemini code i could find xdddd
     public void loadChunkTemporarily(Location location, int durationSeconds) {
         World world = location.getWorld();
         int chunkX = location.getBlockX() >> UptownsStasisRod.getInstance().getConfig().getInt("chunks");

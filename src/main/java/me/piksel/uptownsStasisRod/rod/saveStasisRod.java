@@ -40,6 +40,7 @@ public class saveStasisRod implements CommandExecutor {
         NamespacedKey keyX = new NamespacedKey(UptownsStasisRod.getInstance(),"cordX");
         NamespacedKey keyY = new NamespacedKey(UptownsStasisRod.getInstance(),"cordY");
         NamespacedKey keyZ = new NamespacedKey(UptownsStasisRod.getInstance(),"cordZ");
+        NamespacedKey keyWorld = new NamespacedKey(UptownsStasisRod.getInstance(),"world");
 
         List<String> lore = new ArrayList<>();
 
@@ -62,6 +63,11 @@ public class saveStasisRod implements CommandExecutor {
                 keyZ,
                 PersistentDataType.INTEGER,
                 player.getLocation().getBlockZ()
+        );
+        meta.getPersistentDataContainer().set(
+                keyWorld,
+                PersistentDataType.STRING,
+                player.getWorld().getUID().toString()
         );
         if (UptownsStasisRod.getInstance().getConfig().getBoolean("show-cords")) {
             lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockX()));
