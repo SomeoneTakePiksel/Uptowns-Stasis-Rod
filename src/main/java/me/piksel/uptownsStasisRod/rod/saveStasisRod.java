@@ -1,7 +1,6 @@
 package me.piksel.uptownsStasisRod.rod;
 
-import io.papermc.paper.command.brigadier.BasicCommand;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
+
 import me.piksel.uptownsStasisRod.UptownsStasisRod;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,7 +35,11 @@ public class saveStasisRod implements CommandExecutor {
         if (!player.hasPermission("uptown.stasisRod.use")){return;}
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        if (item.getType() != Material.FISHING_ROD)return;
+        if (item.getType() != Material.FISHING_ROD){
+            player.sendRichMessage(UptownsStasisRod.getInstance().getConfig().getString("not-holding-fishing-rods"));
+            return;
+
+        }
         NamespacedKey keyX = new NamespacedKey(UptownsStasisRod.getInstance(),"cordX");
         NamespacedKey keyY = new NamespacedKey(UptownsStasisRod.getInstance(),"cordY");
         NamespacedKey keyZ = new NamespacedKey(UptownsStasisRod.getInstance(),"cordZ");
@@ -73,6 +76,7 @@ public class saveStasisRod implements CommandExecutor {
             lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockX()));
             lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockY()));
             lore.add(ChatColor.DARK_PURPLE + Integer.toString(player.getLocation().getBlockZ()));
+            lore.add(ChatColor.DARK_PURPLE + player.getLocation().getWorld().toString());
         }
 
 
@@ -87,6 +91,6 @@ public class saveStasisRod implements CommandExecutor {
         }
 
         //item.damage(60,player);
-        player.sendRichMessage("<grey>stasisRod</grey><dark_grey>:</dark_grey> You saved location to you`re fishing rod");
+        player.sendRichMessage(UptownsStasisRod.getInstance().getConfig().getString("saving-sRod"));
     }
 }

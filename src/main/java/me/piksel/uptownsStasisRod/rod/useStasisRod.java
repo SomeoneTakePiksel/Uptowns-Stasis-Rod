@@ -17,6 +17,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
+
+// is this considered spaghettie?
+
 public class useStasisRod implements Listener {
     private boolean can = true ;
     private Plugin plugin;

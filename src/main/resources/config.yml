@@ -5,7 +5,7 @@
 
 # this functions makes it so if it's true the stasis rod will have 4 durabilitie and once it is used it will destroy the rod
 
-destroy-rod: true
+destroy-rod: false
 
 
 
@@ -30,3 +30,11 @@ chunks: 4
 
 #for how many seconds it should load the chunks
 chunks-sec: 4
+
+
+#==================== messages =====================
+
+saving-sRod: "<grey>stasisRod</grey><dark_grey>:</dark_grey> You saved location to you`re fishing rod"
+not-holding-fishing-rods: "<grey>stasisRod</grey><dark_grey>:</dark_grey> You are not holding any fishing rods"
+
+
