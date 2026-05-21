@@ -37,12 +37,16 @@ public class useStasisRod implements Listener {
             return;
         }
 
-        FishHook hook = player.getFishHook();
-        if (hook != null && hook.isValid())return;
+
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        //which chestplate
+
+
         if (item.getType() != Material.FISHING_ROD) return;
+        //hook
+        FishHook hook = player.getFishHook();
+
+        if (hook != null && hook.isValid())return;
         //keys
         NamespacedKey keyX = new NamespacedKey(UptownsStasisRod.getInstance(), "cordX");
         NamespacedKey keyY = new NamespacedKey(UptownsStasisRod.getInstance(), "cordY");
@@ -95,7 +99,7 @@ public class useStasisRod implements Listener {
         Bukkit.getScheduler().runTaskLater(
                 Bukkit.getPluginManager().getPlugin("UptownsStasisRod"),
                 () -> {tp(item,loc);},
-                10
+                5
         );
     }
 
@@ -115,7 +119,7 @@ public class useStasisRod implements Listener {
         Bukkit.getScheduler().runTaskLater(
                 Bukkit.getPluginManager().getPlugin("UptownsStasisRod"),
                 () -> allowUse(a,loc),
-                10
+                5
         );
     }
     private void allowUse(ArmorStand a,Location loc){

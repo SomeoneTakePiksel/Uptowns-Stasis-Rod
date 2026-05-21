@@ -1,5 +1,6 @@
 package me.piksel.uptownsStasisRod;
 
+import me.piksel.uptownsStasisRod.rod.saveStasisListener;
 import me.piksel.uptownsStasisRod.rod.saveStasisRod;
 import me.piksel.uptownsStasisRod.rod.useStasisRod;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ public final class UptownsStasisRod extends JavaPlugin {
         // Plugin startup logic
         getCommand("stasisRod").setExecutor(new saveStasisRod());
         getServer().getPluginManager().registerEvents(new useStasisRod() , this);
+        getServer().getPluginManager().registerEvents(new saveStasisListener(),this);
     }
 
     @Override

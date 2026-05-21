@@ -94,6 +94,9 @@ public class saveStasisRod implements CommandExecutor {
                 meta.setDisplayName(name);
             }
         }
+        if (UptownsStasisRod.getInstance().getConfig().getBoolean("enchantment-glint")){
+            meta.setEnchantmentGlintOverride(true);
+        }
 
 
         item.setItemMeta(meta);
@@ -117,7 +120,7 @@ public class saveStasisRod implements CommandExecutor {
             String name = loc.getBlock().getLocation().toString() ;
             a.setCustomName(name);
             //a.setCustomNameVisible(true);
-            player.sendRichMessage("armorstand spawned");
+            //player.sendRichMessage("armorstand spawned");
         }
 
         //item.damage(60,player);

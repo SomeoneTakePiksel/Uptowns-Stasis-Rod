@@ -13,6 +13,14 @@ alaways-armorstanmd: true
 #just deletes the custom data of the fishing rod after use.
 one-use: true
 
+#instead of saving with a command you can now save by fishing on to you're pressure plate and sneaking
+#note: once you have already fished and the hook is on presssure plate then you can sneak!
+save-fishing: true
+
+
+#checks if you saved on pressure plate!
+check-if-pressureplate: true
+
 #==================== durablitie =====================
 
 
@@ -36,6 +44,12 @@ custom-name: true
 #show cord in lore on the fishing rod
 show-cords: false
 
+#==================== looks =====================
+
+#adds a enchantment glint to a fishing rod when saved
+#keep in mind that it will stay with this glint for the whole time
+enchantment-glint: false
+
 
 
 
@@ -51,7 +65,7 @@ chunks-sec: 4
 
 #==================== messages =====================
 
-saving-sRod: "<grey>stasisRod</grey><dark_grey>:</dark_grey> You saved location to you`re fishing rod"
+saving-sRod: "<grey>stasisRod</grey><dark_grey>:</dark_grey> You saved location to you're fishing rod"
 not-holding-fishing-rods: "<grey>stasisRod</grey><dark_grey>:</dark_grey> You are not holding any fishing rods"
 
 
