@@ -3,6 +3,7 @@ package me.piksel.uptownsStasisRod.rod;
 import me.piksel.uptownsStasisRod.UptownsStasisRod;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -84,6 +85,12 @@ public class useStasisRod implements Listener {
         Chunk chunk = loc.getChunk();
         chunk.load(true);
         loadChunkTemporarily(loc,UptownsStasisRod.getInstance().getConfig().getInt("chunks-sec"));
+        if(UptownsStasisRod.getInstance().getConfig().getBoolean("one-use")){
+            pdc.remove(keyX);
+            pdc.remove(keyZ);
+            pdc.remove(keyY);
+            pdc.remove(keyWorld);
+        }
         Bukkit.getScheduler().runTaskLater(
                 Bukkit.getPluginManager().getPlugin("UptownsStasisRod"),
                 () -> {tp(item,loc);event.setCancelled(true);},
@@ -95,6 +102,10 @@ public class useStasisRod implements Listener {
         ArmorStand a = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
         a.setInvisible(true);
         a.setInvulnerable(true);
+        if(UptownsStasisRod.getInstance().getConfig().getBoolean("alaways-armorstanmd")){
+            a.remove();
+        }
+
         if (UptownsStasisRod.getInstance().getConfig().getBoolean("destroy-rod")) {
             item.damage(9999, a);
         }
@@ -102,12 +113,22 @@ public class useStasisRod implements Listener {
 
         Bukkit.getScheduler().runTaskLater(
                 Bukkit.getPluginManager().getPlugin("UptownsStasisRod"),
-                () -> allowUse(a),
+                () -> allowUse(a,loc),
                 10
         );
     }
-    private void allowUse(ArmorStand a){
-        a.remove();
+    private void allowUse(ArmorStand a,Location loc){
+        if(!UptownsStasisRod.getInstance().getConfig().getBoolean("alaways-armorstanmd")) {
+            a.remove();
+        }
+        if(UptownsStasisRod.getInstance().getConfig().getBoolean("alaways-armorstanmd")){
+            World world = a.getWorld();
+            String name = loc.getBlock().getLocation().toString();
+            world.getEntitiesByClass(ArmorStand.class).stream()
+                    .filter(stand -> name.equals(stand.getCustomName()))
+                    .forEach(Entity::remove);
+        }
+
         can = true;
     }
     //wtf da fuq is this

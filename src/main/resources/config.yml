@@ -1,9 +1,22 @@
 #Stasis Rod config
 
+#==================== modes =====================
+
+#insted of spawning a armor stand when you use the fishing rod the armor stand spawns on command and stays there till u pull the fishing rod
+#the armor stand is small and invisible
+#if you had a fishing rod but you lost it and you want to get rid of the armorstand just bind another fishing rod
+#if you set it to false it will spawn a armor stand when you use the fishing rod
+# ↳it may give you a litlle LITLLE bit of performance but it's really up to you
+alaways-armorstanmd: true
+
+
+#just deletes the custom data of the fishing rod after use.
+one-use: true
+
 #==================== durablitie =====================
 
 
-# this functions makes it so if it's true the stasis rod will have 4 durabilitie and once it is used it will destroy the rod
+#this functions makes it so if it's true the stasis rod will have 4 durabilitie and once it is used it will destroy the rod
 
 destroy-rod: false
 
@@ -12,11 +25,15 @@ destroy-rod: false
 #==================== meta =====================
 
 
-# set "" to not rename it
-# changes the name of the rod once it saved
+#set "" to not rename it
+#changes the name of the rod once it saved
 rod-name: "stasis rod"
 
-# show cord in lore on the fishing rod
+#player can set custom name
+custom-name: true
+
+
+#show cord in lore on the fishing rod
 show-cords: false
 
 
@@ -24,7 +41,7 @@ show-cords: false
 
 #==================== chunks =====================
 
-# how many of chunks it should load when you use the fishing rod
+#how many of chunks it should load when you use the fishing rod
 chunks: 4
 
 

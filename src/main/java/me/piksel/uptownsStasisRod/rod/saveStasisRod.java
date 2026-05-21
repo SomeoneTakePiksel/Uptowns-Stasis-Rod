@@ -3,11 +3,14 @@ package me.piksel.uptownsStasisRod.rod;
 
 import me.piksel.uptownsStasisRod.UptownsStasisRod;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -81,13 +84,40 @@ public class saveStasisRod implements CommandExecutor {
 
 
         meta.setLore(lore);
+        //name
         if (UptownsStasisRod.getInstance().getConfig().getString("rod-name") != "") {
             meta.setDisplayName(UptownsStasisRod.getInstance().getConfig().getString("rod-name"));
         }
+        if (UptownsStasisRod.getInstance().getConfig().getBoolean("custom-name")){
+            if (args.length != 0){
+                String name = String.join(" ", args);
+                meta.setDisplayName(name);
+            }
+        }
+
+
         item.setItemMeta(meta);
+        //destroy rod
         if (UptownsStasisRod.getInstance().getConfig().getBoolean("destroy-rod")){
             item.setDurability((short) 60);
             item.removeEnchantments();
+        }
+        //other mode
+        if(UptownsStasisRod.getInstance().getConfig().getBoolean("alaways-armorstanmd")){
+            ArmorStand a = (ArmorStand) player.getLocation().getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
+            a.setInvisible(true);
+            a.setGravity(false);
+            a.setSmall(true);
+            a.setCanMove(false);
+            a.setCanPickupItems(false);
+            Location loc = a.getLocation();
+            loc.setX(player.getLocation().getBlockX());
+            loc.setY(player.getLocation().getBlockY());
+            loc.setZ(player.getLocation().getBlockZ());
+            String name = loc.getBlock().getLocation().toString() ;
+            a.setCustomName(name);
+            //a.setCustomNameVisible(true);
+            player.sendRichMessage("armorstand spawned");
         }
 
         //item.damage(60,player);
