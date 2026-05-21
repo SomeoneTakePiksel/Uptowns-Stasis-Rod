@@ -2,10 +2,7 @@ package me.piksel.uptownsStasisRod.rod;
 
 import me.piksel.uptownsStasisRod.UptownsStasisRod;
 import org.bukkit.*;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -39,6 +36,9 @@ public class useStasisRod implements Listener {
             event.setCancelled(true);
             return;
         }
+
+        FishHook hook = player.getFishHook();
+        if (hook != null && hook.isValid())return;
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
         //which chestplate
@@ -91,9 +91,10 @@ public class useStasisRod implements Listener {
             pdc.remove(keyY);
             pdc.remove(keyWorld);
         }
+        item.setItemMeta(meta);
         Bukkit.getScheduler().runTaskLater(
                 Bukkit.getPluginManager().getPlugin("UptownsStasisRod"),
-                () -> {tp(item,loc);event.setCancelled(true);},
+                () -> {tp(item,loc);},
                 10
         );
     }
