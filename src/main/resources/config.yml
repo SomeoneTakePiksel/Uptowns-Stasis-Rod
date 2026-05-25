@@ -21,6 +21,12 @@ save-fishing: true
 #checks if you saved on pressure plate!
 check-if-pressureplate: true
 
+
+#ONLY if alaways-armorstanmd is true
+#Saves the coordinats the vanilla way which means when you enter the nether portal with the hook on pressureplate
+vanilla-saving: true
+
+
 #==================== durablitie =====================
 
 

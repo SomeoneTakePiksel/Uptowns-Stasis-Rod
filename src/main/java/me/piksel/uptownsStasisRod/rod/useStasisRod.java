@@ -1,6 +1,7 @@
 package me.piksel.uptownsStasisRod.rod;
 
 import me.piksel.uptownsStasisRod.UptownsStasisRod;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -13,6 +14,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -94,6 +97,12 @@ public class useStasisRod implements Listener {
             pdc.remove(keyZ);
             pdc.remove(keyY);
             pdc.remove(keyWorld);
+        }
+        if (UptownsStasisRod.getInstance().getConfig().getBoolean("show-cords")) {
+            List<String> lore = new ArrayList<>();
+
+            meta.setLore(lore);
+
         }
         item.setItemMeta(meta);
         Bukkit.getScheduler().runTaskLater(
